@@ -1,0 +1,11 @@
+CREATIVE INVENTORY TAB LISTER
+may have to worry about the /suicide for multiplayer in the future, dunno if I need to change it
+up so that some parts are server-level and some parts client-level
+
+ADD /finddeath and /warpdeath, and their configs
+
+make sure config of disabling a command works in multiplayer (eg host disables, and therefore joiners can't use it)
+
+add in-game config changing screen
+
+turn that one part in TheConfigs into a reuseable method of loading config from the file

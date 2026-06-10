@@ -1,0 +1,18 @@
+{
+  "---COMMENT---": "COMMANDS------------------------------------------------------------------------------------------",
+  "commands.resetminecrafttoolsconfig.success": "Config Reset for Minecraft Tools mod (MODID: \"minecraft_tools\")",
+  "commands.suicide.success": "%s committed suicide.",
+  "commands.suicide.failure": "/suicide was disabled in the world owner's config.",
+  "commands.itemkill.success.single": "Killed %s (%s).",
+  "commands.itemkill.success.multiple": "Killed %s Item Entities (%s).",
+  "commands.itemkill.success.none": "There were no dropped items to kill.",
+  "commands.itemkill.failure.nonplayerandempty": "Must provide either target selector or be executed by a player.",
+  "commands.xpkill.success.single": "Killed Experience Orb.",
+  "commands.xpkill.success.multiple": "Killed %s Experience Orbs.",
+  "commands.xpkill.success.none": "There were no Experience Orbs to kill.",
+  "commands.dropkill.success": "Killed %s.",
+  "commands.dropkill.success.none": "There were no mobloot drops to kill.",
+  "commands.xpkill.failure.nonplayerandempty": "Must provide either target selector or be executed by a player.",
+  "----COMMENT----": "Can't seem to find anything about command descriptions for /help so I'll just leave this as it is below (doesn't work yet)",
+  "commands.itemkill.description": "Kills all entities in target selector passed that are dropped items (so \"/itemkill @e\" would just be \"/kill @e[type=item]\"), defaults to @e if no argument is passed. Must be executed by a player if no argument is given."
+}
