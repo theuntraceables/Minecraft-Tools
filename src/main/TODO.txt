@@ -1,9 +1,6 @@
-CREATIVE INVENTORY TAB LISTER
-
+MAKE SURE THE COMMANDS ONLY WORK CLIENT OR SERVER SIDE WHEN THEY SHOULD
 
 may need to do something to test whether the different /warpdeath player properties work multiplayer
-
-make sure config of disabling a command works in multiplayer (e.g. host disables, and therefore joiners can't use it)
 
 add in-game config changing screen
 

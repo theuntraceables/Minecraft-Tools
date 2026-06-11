@@ -58,12 +58,12 @@ public class CreativeItemRegistry {
                 try {
                     final String itemname = BuiltInRegistries.ITEM.getKey(entry.getKey().getItem()).toString();
 //                System.out.println(itemname);
-                    System.out.println("ITEMNAME " + itemname);
+//                    System.out.println("ITEMNAME " + itemname);
                     boolean removedit = itemlist.remove(itemname);
-                    System.out.println(removedit);
-                    if (itemname.contains("armor")) {
-                        System.out.println(itemname);
-                    }
+//                    System.out.println(removedit);
+//                    if (itemname.contains("armor")) {
+//                        System.out.println(itemname);
+//                    }
                 } catch (Exception ignored) {
                 }
 //            System.out.println();

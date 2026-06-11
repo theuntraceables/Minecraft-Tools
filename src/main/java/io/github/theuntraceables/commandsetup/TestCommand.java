@@ -58,7 +58,7 @@ public class TestCommand {
 //            outputString = "It has been " + deathtime2 + " second" + pluralize(deathtime2)
 //                    + " (" + deathtime + " tick"
 //                    + pluralize(deathtime) + ") since " + name + " died.";
-//            System.out.println(outputString);
+            System.out.println(outputString);
 //        }
 
 //        System.out.println("This does nothing right now.");
