@@ -7,6 +7,7 @@ import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
+import static io.github.theuntraceables.MinecraftTools.ide;
 import static io.github.theuntraceables.setup.TheConfigs.*;
 import static io.github.theuntraceables.setup.Tools.*;
 
@@ -24,6 +26,13 @@ public class LoadWorldFunction {
     @SubscribeEvent
     public static void onLoad(ServerStartingEvent event) {
         if (timesdone == 0 && !Objects.requireNonNull(event.getServer().getLevel(Level.OVERWORLD)).isClientSide()) {
+//            determine if run with the Intellij or not (THIS IS IMPORTANT)
+            try {
+                ide = !FMLLoader.isProduction();
+            } catch (Exception ignored) {
+                ide = false;
+            }
+
 //            get world save folder-------------------------------------------------------------------------------------
             Path worldpath = Path.of(deleteLastChar(
                     Objects.requireNonNull(event.getServer().getWorldPath(LevelResource.ROOT).toString())
@@ -32,8 +41,16 @@ public class LoadWorldFunction {
 //            System.out.println(installationPath);
 //            System.out.println(worldpath);
 //            System.out.println(Path.of(installationPath + worldpath));
-            saveFileAbsPath = installationPath + deleteFirstChar(worldpath.toString());
+//            worldpath returns ABSOLUTE PATH IN THE JAR FILE SO NO NEED TO CONCATENATE
+//            IT INTO INSTALLATIONPATH
+            if(ide) {
+                saveFileAbsPath = installationPath + deleteFirstChar(worldpath.toString());
+            }
+            else {
+                saveFileAbsPath = worldpath.toString();
+            }
 //            System.out.println(saveFileAbsPath);
+
             saveFilePathObject = Path.of(saveFileAbsPath);
 
 //            get serverconfig folder and then minecrafttools folder----------------------------------------------------
@@ -42,18 +59,17 @@ public class LoadWorldFunction {
             minecrafttoolsfolder = Path.of(serverconfigfolder + "/minecraft_tools/");
 
 
-
 //            System.out.println(minecrafttoolsfolder);
 //            should be safe to use, right? putting random files in serverconfig shouldn't break anything
 
 //            create serverconfig/minecraft_tools folders if they don't exist-------------------------------------------
             try {
-                if(!Files.isDirectory(serverconfigfolder)) {
+                if (!Files.isDirectory(serverconfigfolder)) {
                     Files.createDirectory(serverconfigfolder);
                     System.out.println("Created Folder at " + serverconfigfolder.toString());
 //                    Don't get what it means by "unnecessary toString() call" when I hover over "toString"
                 }
-                if(!Files.isDirectory(minecrafttoolsfolder)) {
+                if (!Files.isDirectory(minecrafttoolsfolder)) {
                     Files.createDirectory(minecrafttoolsfolder);
                     System.out.println("Created Folder at " + minecrafttoolsfolder.toString());
                 }
@@ -72,8 +88,7 @@ public class LoadWorldFunction {
                     if (Objects.equals(filecontents, "")) {
                         configFile.createNewFile();
                     }
-                }
-                else {
+                } else {
                     configFile.createNewFile();
                 }
 
@@ -95,8 +110,7 @@ public class LoadWorldFunction {
                     }
                 }
 
-            }
-            catch (IOException theerror) {
+            } catch (IOException theerror) {
                 System.out.println("Something went wrong in minecraft_tools ./src/main/java/io.github.theuntraceables.setup.LoadWorldFunction while attempting to read/create " + minecrafttoolsfolder + "/valid_deaths.txt: " + theerror.toString());
             }
 
@@ -111,8 +125,7 @@ public class LoadWorldFunction {
                     if (Objects.equals(filecontents, "")) {
                         configFile.createNewFile();
                     }
-                }
-                else {
+                } else {
                     configFile.createNewFile();
                 }
 
@@ -134,11 +147,9 @@ public class LoadWorldFunction {
                     }
                 }
 
-            }
-            catch (IOException theerror) {
+            } catch (IOException theerror) {
                 System.out.println("Something went wrong in minecraft_tools ./src/main/java/io.github.theuntraceables.setup.LoadWorldFunction while attempting to read/create " + minecrafttoolsfolder + "/warpuse_times.txt: " + theerror.toString());
             }
-
 
 
 //            read/create death_times.txt------------------------------------------------------------------------------
@@ -151,8 +162,7 @@ public class LoadWorldFunction {
                     if (Objects.equals(filecontents, "")) {
                         configFile.createNewFile();
                     }
-                }
-                else {
+                } else {
                     configFile.createNewFile();
                 }
 
@@ -174,15 +184,9 @@ public class LoadWorldFunction {
                     }
                 }
 
-            }
-            catch (IOException theerror) {
+            } catch (IOException theerror) {
                 System.out.println("Something went wrong in minecraft_tools ./src/main/java/io.github.theuntraceables.setup.LoadWorldFunction while attempting to read/create " + minecrafttoolsfolder + "/death_times.txt: " + theerror.toString());
             }
-
-
-
-
-
 
 
             timesdone++;

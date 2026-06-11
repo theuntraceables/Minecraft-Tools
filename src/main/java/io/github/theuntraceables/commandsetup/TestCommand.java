@@ -49,6 +49,7 @@ public class TestCommand {
 //        System.out.println(teststring);
 
         String outputString = "NO OUTPUT GIVEN";
+        outputString = saveFileAbsPath;
 
 //        outputString = minecrafttoolsfolder.toString();
 

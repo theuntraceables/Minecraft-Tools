@@ -10,6 +10,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class MinecraftTools {
     public static final String MODID = "minecraft_tools";
 
+    public static boolean ide = false;
+
 
     public static final TheConfigs thing = new TheConfigs();
 
