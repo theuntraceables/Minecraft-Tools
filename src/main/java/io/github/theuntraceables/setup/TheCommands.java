@@ -6,7 +6,6 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static io.github.theuntraceables.setup.TheConfigs.allowsuicide;
 import static io.github.theuntraceables.setup.TheConfigs.shouldsout;
 
 @Mod.EventBusSubscriber
@@ -18,6 +17,8 @@ public class TheCommands {
         KillXp.register(event.getDispatcher());
         KillDrops.register(event.getDispatcher());
 
+        FindDeath.register(event.getDispatcher());
+        WarpDeath.register(event.getDispatcher());
         Suicide.register(event.getDispatcher());
 
         ResetConfig.register(event.getDispatcher());

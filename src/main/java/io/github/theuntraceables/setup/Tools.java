@@ -23,8 +23,13 @@ public class Tools {
             return prefix + "s";
         }
     }
+
     public static String pluralize(int amount) {
         return pluralize(amount, "");
+    }
+
+    public static String pluralize(String amount) {
+        return pluralize(Integer.parseInt(amount));
     }
 
     public static String deleteLastChar(String thestring) {
@@ -38,6 +43,18 @@ public class Tools {
             thestring = thestring.substring(1,thestring.length());
 //            don't care that the line above is highlighted yellow, saying that
 //            "thestring.length()" argument is unnecessary, too bad for you
+        }
+        return thestring;
+    }
+
+    public static String deleteEndSpaces(String thestring) {
+        if (thestring != null && !thestring.isEmpty()) {
+            while (thestring.startsWith(" ")) {
+                thestring = deleteFirstChar(thestring);
+            }
+            while (thestring.endsWith(" ")) {
+                thestring = deleteLastChar(thestring);
+            }
         }
         return thestring;
     }

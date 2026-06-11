@@ -36,6 +36,7 @@ public class KillDrops {
 
     private static int killAllDrops(CommandContext<CommandSourceStack> context) throws CommandSyntaxException{
         int entitieskilled = 0;
+        int totalitemskilled = 0;
 //        System.out.println("NOARGSGIVEN");
         CommandSourceStack source = context.getSource();
         Entity theplayer = source.getEntity();
@@ -47,6 +48,9 @@ public class KillDrops {
             String entityname = "";
             for(Entity entity:targets){
                 if(entity instanceof ExperienceOrb || entity instanceof ItemEntity) {
+                    if (entity instanceof ItemEntity) {
+                        totalitemskilled += ((ItemEntity) entity).getItem().getCount();
+                    }
                     entityname = entity.getDisplayName().getString();
                     entitieskilled += 1;
                     entity.kill();
@@ -54,9 +58,13 @@ public class KillDrops {
             }
             System.out.println("Killed " + entitieskilled + " entit" + pluralize(entitieskilled,"ie") + ".");
 
-            final String entitykillmessage = entitieskilled + " Entities";
+            final String entitykillmessage = entitieskilled + " Entities (" + totalitemskilled + " item"
+                    + pluralize(totalitemskilled) + " total)";
+
+            final String entityname2 = entityname + " (" + totalitemskilled + " item"
+                    + pluralize(totalitemskilled) + " total)";
+
             if(entitieskilled == 1) {
-                final String entityname2 = entityname;
                 source.sendSuccess(() -> {
                     return Component.translatable("commands.dropkill.success",entityname2);
                 }, true);
@@ -85,6 +93,7 @@ public class KillDrops {
 
     private static int killDropsAtSelectors(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         int entitieskilled = 0;
+        int totalitemskilled = 0;
 
         CommandSourceStack source = context.getSource();
 
@@ -93,6 +102,9 @@ public class KillDrops {
         Collection<? extends Entity> targets = EntityArgument.getEntities(context, "targets");
         for(Entity entity:targets){
             if(entity instanceof ExperienceOrb || entity instanceof ItemEntity) {
+                if (entity instanceof ItemEntity) {
+                    totalitemskilled += ((ItemEntity) entity).getItem().getCount();
+                }
                 entityname = entity.getDisplayName().getString();
                 entitieskilled += 1;
                 entity.kill();
@@ -100,8 +112,10 @@ public class KillDrops {
         }
         System.out.println("Killed " + entitieskilled + " entit" + pluralize(entitieskilled,"ie") + ".");
 
-        final String entitykillmessage = entitieskilled + " Entities";
-        final String entityname2 = entityname;
+        final String entitykillmessage = entitieskilled + " Entities (" + totalitemskilled + " item"
+                + pluralize(totalitemskilled) + " total)";
+        final String entityname2 = entityname + " (" + totalitemskilled + " item"
+                + pluralize(totalitemskilled) + " total)";
 
         if(entitieskilled == 1) {
             source.sendSuccess(() -> {
