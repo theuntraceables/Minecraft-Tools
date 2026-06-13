@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.github.theuntraceables.setup.TheConfigs;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -23,7 +24,7 @@ public class ResetConfig {
         TheConfigs.resetConfigs();
         System.out.println("Config file reset for minecraft_tools mod!");
         context.getSource().sendSuccess(() -> {
-            return Component.translatable("commands.resetminecrafttoolsconfig.success");
+            return Component.translatable("commands.resetminecrafttoolsconfig.success").withStyle(ChatFormatting.UNDERLINE);
         },true);
         return 0;
     }

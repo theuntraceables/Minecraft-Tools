@@ -10,6 +10,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 
+import static io.github.theuntraceables.setup.TheConfigs.getGameRule;
+
 
 public class Suicide {
     private static final DynamicCommandExceptionType ERROR_COMMAND_DISABLED = new DynamicCommandExceptionType((entityName) -> {
@@ -31,7 +33,7 @@ public class Suicide {
     public static int theCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         Entity contextEntity = context.getSource().getEntity();
         if(contextEntity != null) {
-            if (contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_SUICIDE)) {
+            if ((boolean) getGameRule("allowSuicide",contextEntity)) {
 //            kinda just copied the line above from the EnderMan.java file and changed a little bit and it seems to work
                 if (contextEntity != null) {
                     contextEntity.kill();

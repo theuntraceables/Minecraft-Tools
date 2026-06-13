@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.Optional;
 
+import static io.github.theuntraceables.setup.TheConfigs.getGameRule;
 import static io.github.theuntraceables.setup.Tools.deleteFirstChar;
 import static io.github.theuntraceables.setup.Tools.deleteLastChar;
 
@@ -40,7 +41,7 @@ public class FindDeath {
     public static int theCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         Entity contextEntity = context.getSource().getEntity();
 //        don't have to check if it's null because it already checks if it's a player
-        if (contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_FINDDEATH)) {
+        if ((boolean) getGameRule("allowFindingLastDeath",contextEntity)) {
             if (contextEntity instanceof Player) {
 
                 Optional<GlobalPos> lastDeathLocation = ((Player) contextEntity).getLastDeathLocation();

@@ -1,4 +1,8 @@
 {
+  "warning.minecrafttools.ide.line1": "Since you are playing with the mod \"Minecraft Tools\" (minecraft_tools) on an IDE (likely to test a forge mod on IntelliJ), I should warn you that the mod functions a little differently here.",
+  "warning.minecrafttools.ide.line2": "What exactly these differences do may be hard to notice, but this mod probably won't work well in multiplayer while testing a forgegradle runclient.",
+  "warning.minecrafttools.ide.line3": "Transferring a world between a regular modded Minecraft instance and a forgegradle run instance will result in the loss of some data related to this mod (ignorable damage).",
+  "warning.minecrafttools.ide.line4": "You can disable this warning in the config (~/run/config/minecraft_tools_config.txt) by setting ide_warning_message to false.",
   "itemGroup.oncehidden_items": "Hidden Items",
   "-----COMMENT-----": "GAMERULES---------------------------------------------------------------------------------------",
   "gamerule.allowSuicide": "Allow Suicide",

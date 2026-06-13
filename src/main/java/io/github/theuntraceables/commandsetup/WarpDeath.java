@@ -64,15 +64,15 @@ public class WarpDeath {
     public static int theCommand(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         Entity contextEntity = context.getSource().getEntity();
 //        don't have to check if it's null because it already checks if it's a player
-        if (contextEntity.level().getGameRules().getBoolean(RULE_ALLOW_WARPDEATH)) {
+        if ((boolean) getGameRule("allowWarpingToLastDeath",contextEntity)) {
             if (contextEntity instanceof Player) {
                 String playerName = contextEntity.getDisplayName().getString();
                 int timeSinceDeath = playerDeathTimes.get(playerName);
-                int maxTimeAllowed = contextEntity.level().getGameRules().getInt(TheConfigs.RULE_DEATHWARP_TIME_WINDOW);
+                int maxTimeAllowed = (int) getGameRule("deathWarpExpireTime",contextEntity);
                 if (timeSinceDeath < maxTimeAllowed) {
 
-                    if(contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_MULTIWARP) || validPlayerDeaths.get(playerName)) {
-                        int timeSinceCommandUsed = contextEntity.level().getGameRules().getInt(TheConfigs.RULE_WARPDEATH_COOLDOWN);
+                    if((boolean) getGameRule("allowMultipleWarpsPerDeath",contextEntity) || validPlayerDeaths.get(playerName)) {
+                        int timeSinceCommandUsed = (int) getGameRule("deathTeleportCooldown",contextEntity);
                         int playerCooldownActual = playerWarpDeathUseTimes.get(playerName);
                         if (playerCooldownActual >= timeSinceCommandUsed) {
 

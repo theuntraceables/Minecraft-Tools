@@ -2,6 +2,7 @@ package io.github.theuntraceables.setup;
 
 import io.github.theuntraceables.MinecraftTools;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -10,8 +11,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 
+import static io.github.theuntraceables.MinecraftTools.*;
 import static io.github.theuntraceables.setup.CreativeItemRegistry.*;
 import static io.github.theuntraceables.setup.TheConfigs.*;
+import static io.github.theuntraceables.setup.Tools.chatMessage;
+import static io.github.theuntraceables.setup.Tools.dynamicString;
 
 @Mod.EventBusSubscriber(modid = MinecraftTools.MODID,bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TickFunction {
@@ -26,7 +30,19 @@ public class TickFunction {
     private static void tickFunction(Player player) {
         String playerName = player.getDisplayName().getString();
 
+        MinecraftTools.player = player;
+        playerExists = true;
+
         if(firsttime){
+//            System.out.println("THING");
+//            System.out.println(ide);
+//            System.out.println(playerExists);
+            if (ide && ide_warning_message) {
+                chatMessage(dynamicString("warning.minecrafttools.ide.line1"),"bold");
+                chatMessage(dynamicString("warning.minecrafttools.ide.line2"));
+                chatMessage(dynamicString("warning.minecrafttools.ide.line3"));
+                chatMessage(dynamicString("warning.minecrafttools.ide.line4"),"Red");
+            }
             tablist = new java.util.ArrayList<>(BuiltInRegistries.CREATIVE_MODE_TAB.stream().toList());
             tablist.remove(HIDDEN_TAB.get());
 //            System.out.println(tablist);

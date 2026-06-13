@@ -1,5 +1,6 @@
 package io.github.theuntraceables.setup;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -11,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+import static io.github.theuntraceables.MinecraftTools.ide;
 import static io.github.theuntraceables.setup.Tools.deleteFirstChar;
 import static io.github.theuntraceables.setup.Tools.deleteLastChar;
 
@@ -26,8 +28,11 @@ public class TheConfigs {
     public static Path validDeathsPath;
     public static Path warpUseTimesPath;
     public static Path deathTimesPath;
+    public static Path ideGameRulesPath;
 
     public static Path minecrafttoolsfolder;
+
+    public static boolean ide_warning_message = true;
 
 //    public static boolean allowsuicide = true;
 //    changing this to a gamerule instead of config so that
@@ -42,40 +47,119 @@ public class TheConfigs {
     public static String configString;
     public static ArrayList<ArrayList<String>> configentries = new ArrayList<>();
 
-    public static final GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_SUICIDE = GameRules.register(
-            "allowSuicide",
-            GameRules.Category.PLAYER,
-            GameRules.BooleanValue.create(true)
-    );
-    public static final GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_FINDDEATH = GameRules.register(
-            "allowFindingLastDeath",
-            GameRules.Category.PLAYER,
-            GameRules.BooleanValue.create(true)
-    );
-    public static final GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_WARPDEATH = GameRules.register(
-            "allowWarpingToLastDeath",
-            GameRules.Category.PLAYER,
-            GameRules.BooleanValue.create(true)
-    );
-    public static final GameRules.Key<GameRules.IntegerValue> RULE_WARPDEATH_COOLDOWN = GameRules.register(
-            "deathTeleportCooldown",
-            GameRules.Category.PLAYER,
-            GameRules.IntegerValue.create(1200)
-    );
-    public static final GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_MULTIWARP = GameRules.register(
-            "allowMultipleWarpsPerDeath",
-            GameRules.Category.PLAYER,
-            GameRules.BooleanValue.create(false)
-    );
-    public static final GameRules.Key<GameRules.IntegerValue> RULE_DEATHWARP_TIME_WINDOW = GameRules.register(
-            "deathWarpExpireTime",
-            GameRules.Category.PLAYER,
-            GameRules.IntegerValue.create(3600)
-    );
+
+
+
+    static {
+        System.out.println("DID IT WORK 1");
+    }
+    public static GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_SUICIDE;
+    public static GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_FINDDEATH;
+    public static GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_WARPDEATH;
+    public static GameRules.Key<GameRules.IntegerValue> RULE_WARPDEATH_COOLDOWN;
+    public static GameRules.Key<GameRules.BooleanValue> RULE_ALLOW_MULTIWARP;
+    public static GameRules.Key<GameRules.IntegerValue> RULE_DEATHWARP_TIME_WINDOW;
+
+    public static boolean allow_suicide = true;
+    public static boolean allow_finddeath = true;
+    public static boolean allow_warpdeath = true;
+    public static int warpdeath_cooldown = 1200;
+    public static boolean allow_multiwarp = false;
+    public static int deathwarp_time_window = 3600;
+
+    public static Object getGameRule(String key, Entity contextEntity) {
+        Object returnvalue = false;
+        if (!ide) {
+            switch (key) {
+                case "allowSuicide":
+                    returnvalue = contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_SUICIDE);
+                    break;
+                case "allowFindingLastDeath":
+                    returnvalue = contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_FINDDEATH);
+                    break;
+                case "allowWarpingToLastDeath":
+                    returnvalue = contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_WARPDEATH);
+                    break;
+                case "allowMultipleWarpsPerDeath":
+                    returnvalue = contextEntity.level().getGameRules().getBoolean(TheConfigs.RULE_ALLOW_MULTIWARP);
+                    break;
+                case "deathTeleportCooldown":
+                    returnvalue = contextEntity.level().getGameRules().getInt(TheConfigs.RULE_WARPDEATH_COOLDOWN);
+                    break;
+                case "deathWarpExpireTime":
+                    returnvalue = contextEntity.level().getGameRules().getInt(TheConfigs.RULE_DEATHWARP_TIME_WINDOW);
+                    break;
+            }
+            return returnvalue;
+        }
+        else {
+            switch (key) {
+                case "allowSuicide":
+                    returnvalue = allow_suicide;
+                    break;
+                case "allowFindingLastDeath":
+                    returnvalue = allow_finddeath;
+                    break;
+                case "allowWarpingToLastDeath":
+                    returnvalue = allow_warpdeath;
+                    break;
+                case "allowMultipleWarpsPerDeath":
+                    returnvalue = allow_multiwarp;
+                    break;
+                case "deathTeleportCooldown":
+                    returnvalue = warpdeath_cooldown;
+                    break;
+                case "deathWarpExpireTime":
+                    returnvalue = deathwarp_time_window;
+                    break;
+            }
+            return returnvalue;
+        }
+    }
+
+    static {
+        if (!ide) {
+            RULE_ALLOW_SUICIDE = GameRules.register(
+                    "allowSuicide",
+                    GameRules.Category.PLAYER,
+                    GameRules.BooleanValue.create(true)
+            );
+            RULE_ALLOW_FINDDEATH = GameRules.register(
+                    "allowFindingLastDeath",
+                    GameRules.Category.PLAYER,
+                    GameRules.BooleanValue.create(true)
+            );
+            RULE_ALLOW_WARPDEATH = GameRules.register(
+                    "allowWarpingToLastDeath",
+                    GameRules.Category.PLAYER,
+                    GameRules.BooleanValue.create(true)
+            );
+            RULE_WARPDEATH_COOLDOWN = GameRules.register(
+                    "deathTeleportCooldown",
+                    GameRules.Category.PLAYER,
+                    GameRules.IntegerValue.create(1200)
+            );
+            RULE_ALLOW_MULTIWARP = GameRules.register(
+                    "allowMultipleWarpsPerDeath",
+                    GameRules.Category.PLAYER,
+                    GameRules.BooleanValue.create(false)
+            );
+            RULE_DEATHWARP_TIME_WINDOW = GameRules.register(
+                    "deathWarpExpireTime",
+                    GameRules.Category.PLAYER,
+                    GameRules.IntegerValue.create(3600)
+            );
+        }
+    }
+
 
     public static String defaultConfigValue() {
 //        default value!!!!!!!!
-        String returnvalue = "Literally nothing yet. There's no purpose for this right now.";
+        String returnvalue = "#Config File for modid minecraft_tools as mod \"Minecraft Tools\"";
+        returnvalue += "\n#Lines starting with \"#\" and/or \"//\" are comments (ignored).";
+        returnvalue += "\n#Blank lines are also ignored.";
+        returnvalue += "\n\n#Show warning message when loading Minecraft Tools mod in an IDE (such as IntelliJ):";
+        returnvalue += "\nide_warning_message = true";
 
         return returnvalue;
     }
@@ -110,6 +194,20 @@ public class TheConfigs {
         if (returnvalue.length() > 0) {
             returnvalue = deleteLastChar(returnvalue);
         }
+        return returnvalue;
+    }
+
+    public static String createIDEGameRulesString() {
+//        SAVE IDE GAMERULES
+        String returnvalue = "//This file is not necessary if you are playing on CurseForge (Though it'll likely reappear if you delete it).";
+
+        returnvalue += "\nallow_suicide=" + allow_suicide;
+        returnvalue += "\nallow_finddeath=" + allow_finddeath;
+        returnvalue += "\nallow_warpdeath=" + allow_warpdeath;
+        returnvalue += "\nallow_multiwarp=" + allow_multiwarp;
+        returnvalue += "\nwarpdeath_cooldown=" + warpdeath_cooldown;
+        returnvalue += "\ndeathwarp_time_window=" + deathwarp_time_window;
+
         return returnvalue;
     }
 
@@ -179,13 +277,16 @@ public class TheConfigs {
                 if(configentry.size() == 2) {
                     String section1 = configentry.get(0);
                     String section2 = configentry.get(1);
-                    switch (section1) {
+                    switch (section1.toLowerCase()) {
 //                        case "/suicide":
 //                            allowsuicide = Boolean.valueOf(section2);
 //                            break;
 //                        case "suicide":
 //                            allowsuicide = Boolean.valueOf(section2);
 //                            break;
+                        case "ide_warning_message", "idewarningmessage", "ide_warningmessage":
+                            ide_warning_message = Boolean.parseBoolean(section2);
+                            break;
                     }
                 }
 
@@ -262,7 +363,7 @@ public class TheConfigs {
             configFileWriter.close();
 //            BE SURE TO CLOSE THE WRITER OR MEMORY LEAKS OR SOMETHING
         } catch (IOException theerror) {
-            System.out.println("A mysterious error occured: " + theerror.toString());
+            System.out.println("A mysterious error occurred: " + theerror.toString());
         }
     }
 
@@ -281,7 +382,7 @@ public class TheConfigs {
             configFileWriter.close();
 //            BE SURE TO CLOSE THE WRITER OR MEMORY LEAKS OR SOMETHING
         } catch (IOException theerror) {
-            System.out.println("A mysterious error occured: " + theerror.toString());
+            System.out.println("A mysterious error occurred: " + theerror.toString());
         }
     }
 
@@ -300,7 +401,22 @@ public class TheConfigs {
             configFileWriter.close();
 //            BE SURE TO CLOSE THE WRITER OR MEMORY LEAKS OR SOMETHING
         } catch (IOException theerror) {
-            System.out.println("A mysterious error occured: " + theerror.toString());
+            System.out.println("A mysterious error occurred: " + theerror.toString());
+        }
+    }
+    public static void writeIDEGameRules() {
+        File configFile = new File(ideGameRulesPath.toUri());
+        try {
+            configFile.delete();
+            configFile.createNewFile();
+            FileWriter configFileWriter = new FileWriter(configFile);
+
+            configFileWriter.write(createIDEGameRulesString());
+
+            configFileWriter.close();
+//            BE SURE TO CLOSE THE WRITER OR MEMORY LEAKS OR SOMETHING
+        } catch (IOException theerror) {
+            System.out.println("A mysterious error occurred: " + theerror.toString());
         }
     }
 }

@@ -1,0 +1,7 @@
+MAKE SURE THE COMMANDS ONLY WORK CLIENT OR SERVER SIDE WHEN THEY SHOULD
+
+may need to do something to test whether the different /warpdeath player properties work multiplayer
+
+add in-game config changing screen
+
+turn that one part in TheConfigs into a reusable method of loading config from the file

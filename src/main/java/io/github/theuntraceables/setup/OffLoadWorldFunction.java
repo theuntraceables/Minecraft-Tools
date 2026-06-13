@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static io.github.theuntraceables.MinecraftTools.ide;
 import static io.github.theuntraceables.setup.TheConfigs.*;
 
 @Mod.EventBusSubscriber(modid = MinecraftTools.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -29,6 +30,10 @@ public class OffLoadWorldFunction {
             LoadWorldFunction.timesdone = 0;
 
             TickFunction.firsttime = true;
+
+            if (ide) {
+                writeIDEGameRules();
+            }
         }
     }
 }
